@@ -64,7 +64,7 @@ Test the API using tools like Postman, curl, or the Django REST Framework browsa
 
 ## Validation Features
 
-Date Validation: Ensures start date is before end date
-Outdated Validation: Ensures cannot book rooms for past dates.
-Overlap Prevention: Prevents double bookings for the same room
-Error Messages: Provides clear error messages for validation failures
+- Date Validation: Ensures start date is before end date
+- Outdated Validation: Ensures cannot book rooms for past dates.
+- Overlap Prevention: Prevents double bookings for the same room
+- Error Messages: Provides clear error messages for validation failures
