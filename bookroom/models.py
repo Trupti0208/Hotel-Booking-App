@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from datetime import date
 
 
 class Room(models.Model):
@@ -18,11 +19,19 @@ class Booking(models.Model):
         if self.start_date > self.end_date:
             raise ValidationError("Start date must be before end date.")
 
+        today = date.today()
+        if self.start_date < today:
+            raise ValidationError("Cannot book rooms for past dates. Booking date is outdated.")
+
+        if self.end_date < today:
+            raise ValidationError("Cannot book rooms for past dates. Booking date is outdated.")
+
         overlapping_booking = Booking.objects.filter(
             room = self.room,
-            start_date__lt = self.end_date,
-            end_date__gt = self.start_date,
-        )
+            start_date__lte = self.end_date,
+            end_date__gte = self.start_date,
+        ).exclude(pk = self.pk)
+
         if overlapping_booking.exists():
             booking_ranges = []
             for b in overlapping_booking:
